@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+    <script src="js/site.js" asp-append-version="true"></script>
+    <p id="totalDisplay">?</p>
+    <form action="javascript:void(0);" method="GET" onsubmit="GetTotal()">
+        <input type="submit" value="Get Total"/>
+    </form>
+    <form action="javascript:void(0);" method="GET" onsubmit="AddValue()">
+        <input id="addValue" type="text" value="Add Value"/>
+        <input type="submit" value="Add" />
+    </form>
+</body>
+</html>
