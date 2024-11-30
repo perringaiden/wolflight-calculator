@@ -1,0 +1,14 @@
+<Project DefaultTargets="build">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.Threading" />
+    <Using Include="System.Diagnostics" />
+  </ItemGroup>
+</Project>
