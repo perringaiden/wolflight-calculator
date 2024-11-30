@@ -14,9 +14,14 @@ namespace Wolflight.Calculator.Controllers
             return ToDecimal(HttpContext.Session.GetString(TotalName));
         }
 
-        private void StoreTotal(decimal value)
+        private async Task<IActionResult> StoreTotalAsync(decimal value)
         {
             HttpContext.Session.SetString(TotalName, FromDecimal(value));
+
+            // Ensure the value is persisted.
+            await HttpContext.Session.CommitAsync();
+
+            return Ok();
         }
 
         private static string FromDecimal(decimal value)
@@ -46,30 +51,39 @@ namespace Wolflight.Calculator.Controllers
 
         [HttpPut()]
         [Route("/api/Calculator/Add")]
-        public void AddValue(decimal value)
+        public async Task<IActionResult> AddValueAsync(decimal value)
         {
-            StoreTotal(RetrieveTotal() + value);
+            return await StoreTotalAsync(RetrieveTotal() + value);
         }
 
         [HttpPut()]
         [Route("/api/Calculator/Subtract")]
-        public void SubtractValue(decimal value)
+        public async Task<IActionResult> SubtractValueAsync(decimal value)
         {
-            StoreTotal(RetrieveTotal() - value);
+            return await StoreTotalAsync(RetrieveTotal() - value);
         }
 
         [HttpPut()]
         [Route("/api/Calculator/Multiply")]
-        public void MultiplyValue(decimal value)
+        public async Task<IActionResult> MultiplyValueAsync(decimal value)
         {
-            StoreTotal(RetrieveTotal() * value);
+            return await StoreTotalAsync(RetrieveTotal() * value);
         }
 
         [HttpPut()]
         [Route("/api/Calculator/Divide")]
-        public void DivideValue(decimal value)
+        public async Task<IActionResult> DivideValueAsync(decimal value)
         {
-            StoreTotal(RetrieveTotal() / value);
+            if (value == 0M)
+            {
+                return BadRequest(
+                    new ArgumentOutOfRangeException(
+                        nameof(value),
+                        $"{nameof(value)} cannot be zero."
+                    )
+                );
+            }
+            return await StoreTotalAsync(RetrieveTotal() / value);
         }
 
 
